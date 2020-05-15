@@ -1,88 +1,28 @@
 <!doctype html>
 <html lang="sv">
-<head>
-    <meta charset="utf-8">
-    <title>HKR Run</title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="icon" href="favicon.ico">
-</head>
-
-<body>
-
-    <div class="header">
+  <head>
+      <meta charset="utf-8">
+      <title>HKR Run</title>
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="icon" href="favicon.ico">
+  </head>
+  <body>
+    <header>
+      <div class="header">
         <h1>HKR Run</h1>
         <p>View your HKR runs!</p>
       </div>
-
-      <div class="topnav">
-        <a href="home.html">Home</a>
-        <a href="history.html">History</a>
-        <a href="about.html">About</a>
-        <a href="login.html">Login</a>
-        <a href="configuration.html"><img  width="14" src="img/configuration.jpg"></a>
-
-
-      </div>
-
-
-
-<article>
-
-      <style>
-      .login-form {
-        width: 300px;
-        margin: 0 auto;
-        font-family: Tahoma, Geneva, sans-serif;
-      }
-      .login-form h1 {
-        text-align: center;
-        color: #4d4d4d;
-        font-size: 24px;
-        padding: 20px 0 20px 0;
-      }
-      .login-form input[type="password"],
-      .login-form input[type="text"] {
-        width: 100%;
-        padding: 15px;
-        border: 1px solid #dddddd;
-        margin-bottom: 15px;
-        box-sizing:border-box;
-      }
-      .login-form input[type="submit"] {
-        width: 100%;
-        padding: 15px;
-        background-color: #45b153;
-        border: 0;
-        box-sizing: border-box;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ffffff;
-      }
-      </style>
-
-    </head>
-
-    <body>
+    </header>
+      
       <div class="login-form">
         <h1>Login Form</h1>
         <form action="/" method="POST">
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password" required>
-          <input type="submit" formaction="/home">
+          <button>Submit</button>
         </form>
       </div>
-    </body>
 
-    
-
-  </html>
-
-</article>
-
-
-
-
-
-<script type="text/javascript" src="js/main.js"></script>
-</body>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
 </html>

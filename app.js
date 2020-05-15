@@ -3,35 +3,25 @@
  */
 "use strict";
 
-const port    = process.env.DBWEBB_PORT || 1337;
+const port    = process.env.DBWEBB_PORT || 1338;
 const path    = require("path");
 const express = require("express");
+const bodyParser = require('body-parser');
 const app     = express();
 const routeIndex = require("./route/index.js");
-const routeToday = require("./route/today.js");
-const middleware = require("./middleware/index.js");
+const consoleInformationMiddleware = require("./middleware/index.js");
 
 app.set("view engine", "ejs");
 
-
-//Routes
-app.use(middleware.logIncomingToConsole);
+app.use(consoleInformationMiddleware.logIncomingToConsole);
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded({extended: false}));
+
+//Root routes
 app.use("/", routeIndex);
-app.use("/home", require("./route/home.js"));
-app.use("/users", require('./route/users'));
 
-// app.use("/today", routeToday);
+//Console information
 app.listen(port, logStartUpDetailsToConsole);
-
-
-// //When button pressed
-app.post('./views/home.ejs', function (req, res) {
-    console.log(req.body.todo + " Welcome to the home screen!");
-    res.redirect('/');
-})
-
-
 
 /**
  * Log app details to console when starting up.
