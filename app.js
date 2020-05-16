@@ -3,9 +3,10 @@
  */
 "use strict";
 
-const port    = process.env.DBWEBB_PORT || 1338;
+const port    = process.env.PORT || 1338;
 const path    = require("path");
 const express = require("express");
+const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const app     = express();
 const routeIndex = require("./route/index.js");
@@ -13,6 +14,7 @@ const consoleInformationMiddleware = require("./middleware/index.js");
 
 app.set("view engine", "ejs");
 
+app.use(expressSession({secret: process.env.SESSION_SECRET || 'testing'}));
 app.use(consoleInformationMiddleware.logIncomingToConsole);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({extended: false}));

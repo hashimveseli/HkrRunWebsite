@@ -17,7 +17,7 @@ function login(data) {
         console.log('Adding token to axios variables..');
         axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
 
-        return response.status;
+        return response;
 
     }, (error) => {
         console.log('Error!');

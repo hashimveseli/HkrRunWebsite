@@ -1,0 +1,3 @@
+Environment variables for Cloud run:
+
+SESSION_SECRET: 
