@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
 
 // Add a route for the path /home
 router.get("/home", auth.authUser, (req, res) => {
-    
     res.render('home');
 });
 
