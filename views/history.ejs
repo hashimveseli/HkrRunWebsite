@@ -7,33 +7,62 @@
     <link rel="icon" href="favicon.ico">
 </head>
 
+<% var workoutList = workouts; %>
+<% console.log(workoutList[0].workoutId) %>
+<% console.log(workoutList.length); %>
+<% %>
+
 <body>
 
-    <div class="header">
-        <h1>HKR Run</h1>
-        <p>View your HKR runs!</p>
+  <div class="header">
+    <h1>HKR Run</h1>
+    <p>View your HKR runs!</p>
+  </div>
+
+  <div class="topnav">
+    <a href="home">Home</a>
+    <a href="history">History</a>
+    <a href="about">About</a>
+    <a href="configuration"><img  width="14" src="img/configuration.jpg"></a>
+  </div>
+
+
+
+  <article>
+
+    <h1>Past runs</h1>
+
+    <canvas id="workoutChart"></canvas>
+    <div>
+      <button onclick="displayDistanceGraph(<%= JSON.stringify(workoutList) %>)">Distance</button>
+      <button onclick="displayStepsGraph(<%= JSON.stringify(workoutList) %>)">Steps</button>
+      <button onclick="displayTimeGraph(<%= JSON.stringify(workoutList) %>)">Time</button>
+    </div>
+
+    <div>
+      <table class="workoutTable" id="workoutTable">
+        <tr>
+          <th>ID</th>
+          <th>Distance</th>
+        </tr> 
+        <% for(var i = 0; i < workoutList.length; i++){ %>
+          <tr onclick="displayWorkout(<%= JSON.stringify(workoutList[i]) %>)" >
+            <td><%= workoutList[i].workoutId %></td>
+            <td><%= workoutList[i].distance %></td>
+          </tr>
+        <% }%>
+      
+      </table>
+      <div id="displayWorkout">
+
       </div>
+    </div>
 
-      <div class="topnav">
-        <a href="home">Home</a>
-        <a href="history">History</a>
-        <a href="about">About</a>
-        <a href="configuration"><img  width="14" src="img/configuration.jpg"></a>
+  </article>
+  <script type="text/javascript" src="js/workout.js"></script>
+  <script src="/scripts/Chart.js"></script>
+  <script type="text/javascript" src="js/chart.js"></script>
+  
 
-      </div>
-
-
-
-<article>
-
-<h1>Past runs</h1>
-
-<p><img src="img/pastrunExample.jpg" width="500" alt="Exempelbild"></p>
-
-<p>This is only an example.</p>
-
-
-</article>
-<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

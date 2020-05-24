@@ -26,7 +26,10 @@ router.get("/history", auth.authUser, (req, res) => {
     restApi.fetchWorkouts().then((response) => {
         if(response.status == '200'){
             console.log(response.data.workouts);
-            res.render("history")
+            let data = {};
+            data.workouts = response.data.workouts;
+            data.data = response.data;
+            res.render("history", data);
         }
     })
 });
@@ -39,7 +42,7 @@ router.get("/about", auth.authUser, (req, res) => res.render("about"));
 
 //Route for admin page
 router.get('/admin', (req, res) => {
-    
+
 })
 
 //Login handling

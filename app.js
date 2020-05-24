@@ -6,6 +6,7 @@
 const port    = process.env.PORT || 1338;
 const path    = require("path");
 const express = require("express");
+const chart = require('chart.js');
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const app     = express();
@@ -18,6 +19,7 @@ app.use(expressSession({secret: process.env.SESSION_SECRET || 'testing'}));
 app.use(consoleInformationMiddleware.logIncomingToConsole);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/scripts', express.static(__dirname + '/node_modules/chart.js/dist/'));
 
 //Root routes
 app.use("/", routeIndex);

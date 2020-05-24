@@ -7,7 +7,7 @@ const axios = require('axios');
 function login(data) {
     console.log('Trying to log in..');
     
-    return axios.post('https://hkrrun-api-jswgvsei4q-lz.a.run.app/login', {
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/login', {
         password: data.password,
         username: data.username
     })
@@ -31,7 +31,7 @@ function login(data) {
 function fetchWorkouts(){
     console.log('fetching all workouts..');
 
-    return axios.get('https://hkrrun-api-jswgvsei4q-lz.a.run.app/workout')
+    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/workout')
     .then((response) => {
         console.log('Response received..');
 
