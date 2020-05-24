@@ -5,11 +5,14 @@ function authUser(req, res, next){
         res.status(403);
         res.send('Not logged in?');
     }
+    next();
 };
 
 
 function authRole(req, res, next){
 
+
+    next();
 };
 
 module.exports = {

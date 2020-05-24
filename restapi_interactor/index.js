@@ -28,7 +28,26 @@ function login(data) {
     );
 }
 
-function fetchWorkout(id){
+function fetchWorkouts(){
+    console.log('fetching all workouts..');
+
+    return axios.get('https://hkrrun-api-jswgvsei4q-lz.a.run.app/workout')
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
+//Perhaps not needed!
+/*function fetchWorkout(id){
     console.log('Fetching workout with id: ' + id);
 
     return axios.get('https://hkrrun-api-jswgvsei4q-lz.a.run.app/workout/' + id)
@@ -36,15 +55,15 @@ function fetchWorkout(id){
         console.log('response received..')
         console.log(response.data);
 
-        return response.data;
+        return response;
     }, (error) => {
         console.log('Error!');
         console.log(error);
     });
-}
+}*/
 
 //Export functions so they can be used by all routes..
 module.exports = {
     login: login,
-    fetchWorkout: fetchWorkout
+    fetchWorkouts:  fetchWorkouts
 }

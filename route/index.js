@@ -4,6 +4,7 @@
 "use strict";
 
 const auth = require('../auth/authentication.js');
+const workoutScripts = require('../public/js/workout.js');
 const restApi = require('../restapi_interactor/index.js');
 const express = require("express");
 const router  = express.Router();
@@ -20,7 +21,15 @@ router.get("/home", auth.authUser, (req, res) => {
     res.render('home');
 });
 
-router.get("/history", auth.authUser, (req, res) => res.render("history"));
+//Route for the history page
+router.get("/history", auth.authUser, (req, res) => {
+    restApi.fetchWorkouts().then((response) => {
+        if(response.status == '200'){
+            console.log(response.data.workouts);
+            res.render("history")
+        }
+    })
+});
 
 //Route for configuration page
 router.get("/configuration", auth.authUser, (req, res) => res.render("configuration"));
@@ -28,6 +37,12 @@ router.get("/configuration", auth.authUser, (req, res) => res.render("configurat
 //Route for about page
 router.get("/about", auth.authUser, (req, res) => res.render("about"));
 
+//Route for admin page
+router.get('/admin', (req, res) => {
+    
+})
+
+//Login handling
 router.post('/', (req, res) => {
     restApi.login(req.body).then(response => {
         if(response.status == '200'){
@@ -40,12 +55,6 @@ router.post('/', (req, res) => {
         }
     });
     
-})
-
-router.get('/workout', auth.authUser, (req, res) => {
-    restApi.fetchWorkout(1).then(workout => {
-        console.log(workout);
-    })
 })
 
 module.exports = router;
