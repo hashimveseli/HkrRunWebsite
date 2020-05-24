@@ -46,6 +46,53 @@ function fetchWorkouts(){
     );
 }
 
+/**
+ * Configuration REST API calls
+ * 
+ */
+
+function changePassword(data){
+    console.log('Changing password..');
+    
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/password', {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
+function changeEmail(data){
+    console.log('Changing email..');
+    
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/email', {
+        oldEmail: data.oldEmail,
+        newEmail: data.newEmail
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
 //Perhaps not needed!
 /*function fetchWorkout(id){
     console.log('Fetching workout with id: ' + id);
@@ -65,5 +112,7 @@ function fetchWorkouts(){
 //Export functions so they can be used by all routes..
 module.exports = {
     login: login,
-    fetchWorkouts:  fetchWorkouts
+    fetchWorkouts:  fetchWorkouts,
+    changePassword: changePassword,
+    changeEmail: changeEmail
 }

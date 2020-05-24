@@ -35,7 +35,13 @@ router.get("/history", auth.authUser, (req, res) => {
 });
 
 //Route for configuration page
-router.get("/configuration", auth.authUser, (req, res) => res.render("configuration"));
+router.get("/configuration", auth.authUser, (req, res) => {
+    let data = {};
+    data.passwordChangeStatus = '';
+    data.emailChangeStatus = '';
+    res.render("configuration", data);
+
+});
 
 //Route for about page
 router.get("/about", auth.authUser, (req, res) => res.render("about"));
@@ -43,7 +49,7 @@ router.get("/about", auth.authUser, (req, res) => res.render("about"));
 //Route for admin page
 router.get('/admin', (req, res) => {
 
-})
+});
 
 //Login handling
 router.post('/', (req, res) => {
@@ -51,6 +57,7 @@ router.post('/', (req, res) => {
         if(response.status == '200'){
             let sess = req.session;
             sess.token = response.data.token;
+            sess.priviliege = response.data.privilege;
             console.log(sess.token);
             res.render('home');
         }else{
@@ -58,6 +65,54 @@ router.post('/', (req, res) => {
         }
     });
     
+})
+
+//Change password
+router.post('/password', (req, res) => {
+    /*restApi.changePassword(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordStatus = 'Password changed!';
+            data.emailChangeStatus = '';
+
+
+        }else{
+            let data = {};
+            data.passwordStatus = 'Password change failed..';
+            data.emailChangeStatus = '';
+            res.render('configuration', data);
+        }
+    })*/
+
+    console.log(req.body);
+    let data = {};
+    data.passwordChangeStatus = 'failed';
+    data.emailChangeStatus = '';
+    res.render('configuration', data);
+})
+
+//Change email
+router.post('/email', (req, res) => {
+    /*restApi.changeEmail(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordStatus = '';
+            data.emailChangeStatus = 'Email change failed..';
+
+
+        }else{
+            let data = {};
+            data.passwordStatus = '';
+            data.emailChangeStatus = 'Email change failed..';
+            res.render('configuration', data);
+        }
+    })*/
+
+    console.log(req.body);
+    let data = {};
+    data.passwordChangeStatus = '';
+    data.emailChangeStatus = 'failed';
+    res.render('configuration', data);
 })
 
 module.exports = router;
