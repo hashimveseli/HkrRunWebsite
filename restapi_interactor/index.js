@@ -46,6 +46,23 @@ function fetchWorkouts(){
     );
 }
 
+function fetchUsers(){
+    console.log('fetching all users');
+
+    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/user')
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    })
+}
+
 /**
  * Configuration REST API calls
  * 
@@ -60,6 +77,9 @@ function changePassword(data){
     })
     .then((response) => {
         console.log('Response received..');
+
+        console.log('Adding new token to axios variables..');
+        axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
 
         return response;
 
@@ -113,6 +133,7 @@ function changeEmail(data){
 module.exports = {
     login: login,
     fetchWorkouts:  fetchWorkouts,
+    fetchUsers: fetchUsers,
     changePassword: changePassword,
     changeEmail: changeEmail
 }

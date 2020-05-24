@@ -47,8 +47,28 @@ router.get("/configuration", auth.authUser, (req, res) => {
 router.get("/about", auth.authUser, (req, res) => res.render("about"));
 
 //Route for admin page
-router.get('/admin', (req, res) => {
+router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
 
+    //Fetch all users
+    restApi.fetchUsers().then(response => {
+        if(response.status == '200'){
+            console.log('Users fetched');
+            console.log(response.data);
+
+            let data = {};
+            data.users = response.data.users;
+            data.message = 'Success';
+
+            res.render('admin', data);
+        }else{
+
+            let data = {};
+            data.users = null;
+            data.message = 'Failure fetching all users';
+
+            res.render('admin', data);
+        }
+    });
 });
 
 //Login handling
@@ -57,62 +77,56 @@ router.post('/', (req, res) => {
         if(response.status == '200'){
             let sess = req.session;
             sess.token = response.data.token;
-            sess.priviliege = response.data.privilege;
+            sess.privilege = response.data.privilege;
+
             console.log(sess.token);
+            console.log(sess.privilege);
+
             res.render('home');
         }else{
             res.render('login');
         }
     });
     
-})
+});
 
 //Change password
 router.post('/password', (req, res) => {
-    /*restApi.changePassword(req.body).then(response => {
+    restApi.changePassword(req.body).then(response => {
         if(response.status == '200'){
             let data = {};
-            data.passwordStatus = 'Password changed!';
+            data.passwordChangeStatus = 'Password changed!';
             data.emailChangeStatus = '';
 
+            res.render('configuration', data);
 
         }else{
             let data = {};
-            data.passwordStatus = 'Password change failed..';
+            data.passwordChangeStatus = 'Password change failed..';
             data.emailChangeStatus = '';
             res.render('configuration', data);
         }
-    })*/
-
-    console.log(req.body);
-    let data = {};
-    data.passwordChangeStatus = 'failed';
-    data.emailChangeStatus = '';
-    res.render('configuration', data);
+    });
 })
 
 //Change email
 router.post('/email', (req, res) => {
-    /*restApi.changeEmail(req.body).then(response => {
+    restApi.changeEmail(req.body).then(response => {
         if(response.status == '200'){
             let data = {};
-            data.passwordStatus = '';
+            data.passwordChangeStatus = '';
             data.emailChangeStatus = 'Email change failed..';
 
+            res.render('configuration', data);
 
         }else{
             let data = {};
-            data.passwordStatus = '';
+            data.passwordChangeStatus = '';
             data.emailChangeStatus = 'Email change failed..';
             res.render('configuration', data);
         }
-    })*/
+    });
 
-    console.log(req.body);
-    let data = {};
-    data.passwordChangeStatus = '';
-    data.emailChangeStatus = 'failed';
-    res.render('configuration', data);
-})
+});
 
 module.exports = router;
