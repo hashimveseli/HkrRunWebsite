@@ -1,3 +1,9 @@
 Environment variables for Cloud run:
 
 SESSION_SECRET: 
+
+
+Google Cloud Interaction
+Build container:
+Go to the directory containing the dockerfile then run:
+gcloud builds submit --tag gcr.io/hkr-run-api/hkrrun-website
