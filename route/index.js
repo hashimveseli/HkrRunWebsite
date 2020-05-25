@@ -233,6 +233,9 @@ router.post('/admin/email', (req, res) => {
 router.post('/admin/delete', (req, res) => {
     const data = {};
 
+    console.log(req.body);
+    console.log('Attempting to delete user');
+
     restApi.adminDeleteUser(req.body).then(response => {
         if(response.status == '200'){
             console.log('Admin delete user success..');

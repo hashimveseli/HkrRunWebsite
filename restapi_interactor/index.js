@@ -150,7 +150,15 @@ function adminChangePassword(data){
         newPassword: data.newPassword
     })
     .then((response) => {
-        console.log('Response received..');
+        console.log('Admin change password response received..');
+        console.log(response.data);
+
+        if(response.data.token != null){
+            //Admin updated his own password via admin page, therefore token needs to be updated.
+            console.log('Adding new token to axios variables..');
+            axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
+        }
+        
 
         return response;
 
@@ -189,7 +197,7 @@ function adminChangePrivilege(data){
 
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/privilege', {
         userId: data.userId,
-        privilege: data.privilege
+        newPrivilege: data.privilege
     })
     .then((response) => {
         console.log('Response received..');
@@ -205,12 +213,12 @@ function adminChangePrivilege(data){
     );
 }
 
-function adminDeleteUser(data){
-    console.log('Admin deleting a user..');
+function adminDeleteUser(request){
+    console.log('Admin deleting a user..', request.userId);
 
-    return axios.delete('https://hkrrun-jswgvsei4q-lz.a.run.app/user', {
-        userId: data.userId
-    })
+    return axios.delete('https://hkrrun-jswgvsei4q-lz.a.run.app/user', {data: {
+        userId: request.userId
+    }})
     .then((response) => {
         console.log('Response received..');
 
