@@ -14,9 +14,6 @@ function login(data) {
     .then((response) => {
         console.log('Response received..');
 
-        console.log('Adding token to axios variables..');
-        axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
-
         return response;
 
     }, (error) => {
@@ -51,10 +48,12 @@ function register(data){
     );
 }
 
-function fetchWorkouts(){
+function fetchWorkouts(session){
     console.log('fetching all workouts..');
+    console.log('Adding token: ', session.token);
 
-    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/workout')
+    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/workout', 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 
@@ -69,10 +68,12 @@ function fetchWorkouts(){
     );
 }
 
-function fetchUsers(){
+function fetchUsers(session){
     console.log('fetching all users');
+    console.log('Adding token: ', session.token);
 
-    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/user')
+    return axios.get('https://hkrrun-jswgvsei4q-lz.a.run.app/user',
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 
@@ -91,18 +92,17 @@ function fetchUsers(){
  * 
  */
 
-function changePassword(data){
+function changePassword(data, session){
     console.log('Changing password..');
+    console.log('Adding token: ', session.token);
     
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/password', {
         oldPassword: data.oldPassword,
         newPassword: data.newPassword
-    })
+    }, 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
-
-        console.log('Adding new token to axios variables..');
-        axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
 
         return response;
 
@@ -115,13 +115,15 @@ function changePassword(data){
     );
 }
 
-function changeEmail(data){
+function changeEmail(data, session){
     console.log('Changing email..');
+    console.log('Adding token: ', session.token);
     
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/email', {
         oldEmail: data.oldEmail,
         newEmail: data.newEmail
-    })
+    }, 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 
@@ -142,24 +144,18 @@ function changeEmail(data){
  * 
  */
 
-function adminChangePassword(data){
+function adminChangePassword(data, session){
     console.log('Admin changing a user password..');
 
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/password', {
         userId: data.userId,
         newPassword: data.newPassword
-    })
+    }, 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Admin change password response received..');
         console.log(response.data);
-
-        if(response.data.token != null){
-            //Admin updated his own password via admin page, therefore token needs to be updated.
-            console.log('Adding new token to axios variables..');
-            axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
-        }
         
-
         return response;
 
     }, (error) => {
@@ -171,13 +167,14 @@ function adminChangePassword(data){
     );
 }
 
-function adminChangeEmail(data){
+function adminChangeEmail(data, session){
     console.log('Admin changing a user email..');
 
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/email', {
         userId: data.userId,
         newEmail: data.newEmail
-    })
+    }, 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 
@@ -192,13 +189,14 @@ function adminChangeEmail(data){
     );
 }
 
-function adminChangePrivilege(data){
+function adminChangePrivilege(data, session){
     console.log('Admin changing a user privilege..');
 
     return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/privilege', {
         userId: data.userId,
         newPrivilege: data.privilege
-    })
+    }, 
+    { headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 
@@ -213,12 +211,12 @@ function adminChangePrivilege(data){
     );
 }
 
-function adminDeleteUser(request){
+function adminDeleteUser(request, session){
     console.log('Admin deleting a user..', request.userId);
 
     return axios.delete('https://hkrrun-jswgvsei4q-lz.a.run.app/user', {data: {
         userId: request.userId
-    }})
+    }, headers: {'Authorization': 'Bearer ' + session.token}})
     .then((response) => {
         console.log('Response received..');
 

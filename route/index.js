@@ -33,7 +33,7 @@ router.get("/home", auth.authUser, (req, res) => {
 
 //Route for the history page
 router.get("/history", auth.authUser, (req, res) => {
-    restApi.fetchWorkouts().then((response) => {
+    restApi.fetchWorkouts(req.session).then((response) => {
         if(response.status == '200'){
             console.log(response.data.workouts);
             let data = {};
@@ -70,7 +70,7 @@ router.get('/register', (req, res) => {
 router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
 
     //Fetch all users
-    restApi.fetchUsers().then(response => {
+    restApi.fetchUsers(req.session).then(response => {
         if(response.status == '200'){
             console.log('Users fetched');
             console.log(response.data);
@@ -136,7 +136,7 @@ router.post('/register', (req, res) => {
 
 //Change password
 router.post('/password', (req, res) => {
-    restApi.changePassword(req.body).then(response => {
+    restApi.changePassword(req.body, req.session).then(response => {
         if(response.status == '200'){
             let data = {};
             data.passwordChangeStatus = 'Password changed!';
@@ -155,7 +155,7 @@ router.post('/password', (req, res) => {
 
 //Change email
 router.post('/email', (req, res) => {
-    restApi.changeEmail(req.body).then(response => {
+    restApi.changeEmail(req.body, req.session).then(response => {
         if(response.status == '200'){
             let data = {};
             data.passwordChangeStatus = '';
@@ -179,7 +179,7 @@ router.post('/email', (req, res) => {
 router.post('/admin/password', (req, res) => {
     const data = {};
 
-    restApi.adminChangePassword(req.body).then(response => {
+    restApi.adminChangePassword(req.body, req.session).then(response => {
         if(response.status == '200'){
             console.log('Admin password change success..');
             data.passwordChangeStatus = 'Password changed!';
@@ -205,7 +205,7 @@ router.post('/admin/password', (req, res) => {
 router.post('/admin/email', (req, res) => {
     const data = {};
 
-    restApi.adminChangeEmail(req.body).then(response => {
+    restApi.adminChangeEmail(req.body, req.session).then(response => {
         if(response.status == '200'){
             console.log('Admin email change success..');
             data.passwordChangeStatus = '';
@@ -236,7 +236,7 @@ router.post('/admin/delete', (req, res) => {
     console.log(req.body);
     console.log('Attempting to delete user');
 
-    restApi.adminDeleteUser(req.body).then(response => {
+    restApi.adminDeleteUser(req.body, req.session).then(response => {
         if(response.status == '200'){
             console.log('Admin delete user success..');
             data.passwordChangeStatus = '';
@@ -264,7 +264,7 @@ router.post('/admin/delete', (req, res) => {
 router.post('/admin/privilege', (req, res) => {
     const data = {};
 
-    restApi.adminChangePrivilege(req.body).then(response => {
+    restApi.adminChangePrivilege(req.body, req.session).then(response => {
         if(response.status == '200'){
             console.log('Admin privilege change success..');
             data.passwordChangeStatus = '';
