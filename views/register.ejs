@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <title>HKR Run</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>HKR Run</h1>
+        <p>View your HKR runs!</p>
+    </div>
+
+    <article>
+
+        <h1>Register</h1>
+        
+        <div class="login-form">
+            <h1>Enter the following data to become a member.</h1>
+            <form action="/register" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="text" name="ssn" placeholder="SSN" required>
+                <button>Submit</button>
+            </form>
+        </div>
+        <%= registerStatus %>
+        
+    </article>
+
+
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

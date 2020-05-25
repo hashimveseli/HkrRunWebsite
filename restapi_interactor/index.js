@@ -28,6 +28,29 @@ function login(data) {
     );
 }
 
+function register(data){
+    console.log('Registering new user..');
+
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/register', {
+        ssn: data.ssn,
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        privilege: 0
+    }).then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
 function fetchWorkouts(){
     console.log('fetching all workouts..');
 
@@ -113,6 +136,95 @@ function changeEmail(data){
     );
 }
 
+/**
+ * Admin methods
+ * 
+ * 
+ */
+
+function adminChangePassword(data){
+    console.log('Admin changing a user password..');
+
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/password', {
+        userId: data.userId,
+        newPassword: data.newPassword
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
+function adminChangeEmail(data){
+    console.log('Admin changing a user email..');
+
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/email', {
+        userId: data.userId,
+        newEmail: data.newEmail
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
+function adminChangePrivilege(data){
+    console.log('Admin changing a user privilege..');
+
+    return axios.post('https://hkrrun-jswgvsei4q-lz.a.run.app/admin/privilege', {
+        userId: data.userId,
+        privilege: data.privilege
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
+function adminDeleteUser(data){
+    console.log('Admin deleting a user..');
+
+    return axios.delete('https://hkrrun-jswgvsei4q-lz.a.run.app/user', {
+        userId: data.userId
+    })
+    .then((response) => {
+        console.log('Response received..');
+
+        return response;
+
+    }, (error) => {
+        console.log('Error!');
+        console.log(error);
+
+        return false;
+    }
+    );
+}
+
 //Perhaps not needed!
 /*function fetchWorkout(id){
     console.log('Fetching workout with id: ' + id);
@@ -132,8 +244,13 @@ function changeEmail(data){
 //Export functions so they can be used by all routes..
 module.exports = {
     login: login,
+    register: register,
     fetchWorkouts:  fetchWorkouts,
     fetchUsers: fetchUsers,
     changePassword: changePassword,
-    changeEmail: changeEmail
+    changeEmail: changeEmail,
+    adminChangeEmail: adminChangeEmail,
+    adminChangePassword: adminChangePassword,
+    adminChangePrivilege: adminChangePrivilege,
+    adminDeleteUser: adminDeleteUser
 }

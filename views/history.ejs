@@ -8,8 +8,6 @@
 </head>
 
 <% var workoutList = workouts; %>
-<% console.log(workoutList[0].workoutId) %>
-<% console.log(workoutList.length); %>
 
 <body>
 
@@ -45,12 +43,13 @@
           <th>ID</th>
           <th>Distance</th>
         </tr> 
+        <% if(workoutList != undefined){ %>
         <% for(var i = 0; i < workoutList.length; i++){ %>
           <tr onclick="displayWorkout(<%= JSON.stringify(workoutList[i]) %>)" >
             <td><%= workoutList[i].workoutId %></td>
             <td><%= workoutList[i].distance %></td>
           </tr>
-        <% }%>
+        <% } }%>
       
       </table>
       <div id="displayWorkout">

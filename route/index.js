@@ -27,9 +27,11 @@ router.get("/history", auth.authUser, (req, res) => {
         if(response.status == '200'){
             console.log(response.data.workouts);
             let data = {};
+            
             data.workouts = response.data.workouts;
             data.data = response.data;
             res.render("history", data);
+            
         }
     })
 });
@@ -46,6 +48,14 @@ router.get("/configuration", auth.authUser, (req, res) => {
 //Route for about page
 router.get("/about", auth.authUser, (req, res) => res.render("about"));
 
+//Route for the register page
+router.get('/register', (req, res) => {
+    let data = {};
+    data.registerStatus = '';
+
+    res.render('register', data);
+});
+
 //Route for admin page
 router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
 
@@ -58,6 +68,10 @@ router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
             let data = {};
             data.users = response.data.users;
             data.message = 'Success';
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
 
             res.render('admin', data);
         }else{
@@ -65,6 +79,10 @@ router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
             let data = {};
             data.users = null;
             data.message = 'Failure fetching all users';
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
 
             res.render('admin', data);
         }
@@ -89,6 +107,22 @@ router.post('/', (req, res) => {
     });
     
 });
+
+//Register
+router.post('/register', (req, res) => {
+    restApi.register(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.registerStatus = '';
+
+            res.render('login');
+        }else{
+            let data = {};
+            data.registerStatus = 'Failed registering new user..'
+            res.render('register', data);
+        }
+    })
+})
 
 //Change password
 router.post('/password', (req, res) => {
@@ -123,6 +157,103 @@ router.post('/email', (req, res) => {
             let data = {};
             data.passwordChangeStatus = '';
             data.emailChangeStatus = 'Email change failed..';
+            res.render('configuration', data);
+        }
+    });
+
+});
+
+//Admin endpoints
+
+//Change user password
+router.post('/admin/password', (req, res) => {
+    restApi.adminChangePassword(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordChangeStatus = 'Password changed!';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
+
+            res.render('configuration', data);
+
+        }else{
+            let data = {};
+            data.passwordChangeStatus = 'Password change failed..';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
+            res.render('configuration', data);
+        }
+    });
+})
+
+//Change admin email
+router.post('/admin/email', (req, res) => {
+    restApi.adminChangeEmail(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = 'Email changed..';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
+
+            res.render('configuration', data);
+
+        }else{
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = 'Email change failed..';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = '';
+            res.render('configuration', data);
+        }
+    });
+
+});
+
+//Delete user
+router.post('/admin/delete', (req, res) => {
+    restApi.adminDeleteUser(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = 'Delete user successful..';
+            data.privilegeChangeStatus = '';
+
+            res.render('configuration', data);
+
+        }else{
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = 'Delete user failed';
+            data.privilegeChangeStatus = '';
+            res.render('configuration', data);
+        }
+    });
+
+});
+
+//Change privilege
+router.post('/admin/privilege', (req, res) => {
+    restApi.adminChangePrivilege(req.body).then(response => {
+        if(response.status == '200'){
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = 'Privilege changed..';
+
+            res.render('configuration', data);
+
+        }else{
+            let data = {};
+            data.passwordChangeStatus = '';
+            data.emailChangeStatus = '';
+            data.deleteUserStatus = '';
+            data.privilegeChangeStatus = 'Privilege change failed..';
             res.render('configuration', data);
         }
     });
