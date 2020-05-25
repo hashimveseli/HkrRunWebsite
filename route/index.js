@@ -16,6 +16,16 @@ router.get('/', (req, res) => {
 
 });
 
+//Add logout functionality
+router.get('/logout', auth.authUser, (req, res) => {
+    console.log('Logging out..');
+    //Clear authorization header!
+    let session = req.session;
+    session.token = null;
+    session.privilege = null;
+    res.render('login');
+})
+
 // Add a route for the path /home
 router.get("/home", auth.authUser, (req, res) => {
     res.render('home');
@@ -27,7 +37,7 @@ router.get("/history", auth.authUser, (req, res) => {
         if(response.status == '200'){
             console.log(response.data.workouts);
             let data = {};
-            
+
             data.workouts = response.data.workouts;
             data.data = response.data;
             res.render("history", data);

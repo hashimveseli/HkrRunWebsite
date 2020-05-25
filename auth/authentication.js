@@ -5,8 +5,10 @@ function authUser(req, res, next){
         res.statusMessage = 'Not logged in?';
         res.status(403).end();
         
+    }else{
+        next();
     }
-    next();
+    
 };
 
 
@@ -17,9 +19,11 @@ function authRole(req, res, next){
         res.statusMessage ='Not an admin';
         res.status(403).end();
         
+    }else{
+        next();
     }
 
-    next();
+    
 };
 
 module.exports = {
