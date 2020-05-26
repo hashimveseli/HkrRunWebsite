@@ -12,8 +12,8 @@
   <body>
 
     <div class="header">
-      <h1>HKR Run</h1>
-      <p>View your HKR runs!</p>
+      <h1 class="w3-myfont">HKR Run Admin</h1>
+      <p>Be in charge of the website.</p>
     </div>
 
     <div class="topnav">
@@ -21,6 +21,14 @@
       <a href="history">History</a>
       <a href="about">About</a>
       <a href="admin">Admin</a>
+      <a></a>
+      <a></a>
+      <a></a>
+      <a></a>
+      <a></a>
+      <a></a>
+      <a></a>
+      <a></a>
       <a href="configuration"><img  width="14" src="img/configuration.jpg"></a>
       <a href="logout">Logout</a>
     </div>
@@ -53,7 +61,7 @@
         <form action="/admin/password" method="POST">
           <input type="number" name="userId" placeholder="Enter userId to alter" required>
           <input type="text" name="newPassword" placeholder="New password" required>
-          <button>Submit</button>
+          <button class="adminSubmitButtons">Submit</button>
         </form>  
         <%= passwordChangeStatus %>
       </div>
@@ -63,7 +71,7 @@
         <form action="/admin/email" method="POST">
           <input type="number" name="userId" placeholder="Enter userId to alter" required>
           <input type="text" name="newEmail" placeholder="New email" required>
-          <button>Submit</button>
+          <button class="adminSubmitButtons">Submit</button>
         </form>  
         <%= emailChangeStatus %>
       </div>
@@ -73,7 +81,7 @@
         <form action="/admin/privilege" method="POST">
           <input type="number" name="userId" placeholder="Enter userId to alter" required>
           <input type="number" name="privilege" placeholder="New privilege (1 or 0)" required>
-          <button>Submit</button>
+          <button class="adminSubmitButtons">Submit</button>
         </form>  
         <%= privilegeChangeStatus %>
       </div>
@@ -82,7 +90,7 @@
         <h1>Delete User Form</h1>
         <form action="/admin/delete" method="POST">
           <input type="number" name="userId" placeholder="Enter userId to alter" required>
-          <button>Submit</button>
+          <button class="adminSubmitButtons">Submit</button>
         </form>  
         <%= deleteUserStatus %>
       </div>
