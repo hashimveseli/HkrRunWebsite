@@ -8,6 +8,7 @@
 </head>
 
 <% var workoutList = workouts; %>
+<% var tableRow = 0; %>
 
 <body>
 
@@ -38,21 +39,26 @@
       <button onclick="displayTimeGraph(<%= JSON.stringify(workoutList) %>)">Time</button>
     </div>
 
-    <div>
-      <table class="workoutTable" id="workoutTable">
-        <tr>
+    <div class="wrapper">
+      <div class="tableWrapper">
+      <table class="defaultTable" id="workoutTable">
+        <tr class="defaultColumn">
           <th>ID</th>
-          <th>Distance</th>
         </tr> 
         <% if(workoutList != undefined){ %>
         <% for(var i = 0; i < workoutList.length; i++){ %>
-          <tr onclick="displayWorkout(<%= JSON.stringify(workoutList[i]) %>)" >
+          <tr class="defaultRow<%= tableRow %>" onclick="displayWorkout(<%= JSON.stringify(workoutList[i]) %>)" >
             <td><%= workoutList[i].workoutId %></td>
-            <td><%= workoutList[i].distance %></td>
           </tr>
+        <% if(tableRow == 0){
+          tableRow = 1;
+        }else{
+          tableRow = 0;
+        } %>
         <% } }%>
       
       </table>
+      </div>
       <div id="displayWorkout">
 
       </div>

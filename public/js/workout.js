@@ -4,19 +4,23 @@
  */
 
  function displayWorkout(workout){
-    console.log('workout test!' + workout);
+   console.log('workout test!' + workout);
 
-    var workoutDiv = document.getElementById('displayWorkout');
+   var workoutDiv = document.getElementById('displayWorkout');
 
-    var innerHtml = '';
+   var innerHtml = '';
 
-    innerHtml = '<label>Workout ID: ' + workout.workoutId + '</label><br>';
-    innerHtml += '<label>Distance: ' + workout.distance + '</label><br>';
-    innerHtml += '<label>Steps: ' + workout.steps + '</label><br>';
-    innerHtml += '<label>Time: ' + workout.time + '</label><br>';
-    innerHtml += '<label>Distance performance: ' + workout.distPerformance + '</label><br>';
-    innerHtml += '<label>Steps performance: ' + workout.stepsPerformance + '</label><br>';
+   innerHtml = '<table class=\"defaultTable\">'
+   innerHtml += '<tr class=\"defaultColumn\"><td>Attribute</td><td>Value</td></tr>';
+   innerHtml += '<tr class=\"defaultRow0\"><td>Workout ID</td><td> ' + workout.workoutId + '</td></tr>';
+   innerHtml += '<tr class=\"defaultRow1\"><td>Distance in km</td><td>' + workout.distance + '</td></tr>';
+   innerHtml += '<tr class=\"defaultRow0\"><td>Steps</td><td>' + workout.steps + '</td></tr>';
+   innerHtml += '<tr class=\"defaultRow1\"><td>Time hh:mm:ss</td><td>' + workout.time + '</td></tr>';
+   innerHtml += '<tr class=\"defaultRow0\"><td>Distance performance</td><td>' + workout.distPerformance + '</td></tr>';
+   innerHtml += '<tr class=\"defaultRow1\"><td>Steps performance</td><td>' + workout.stepsPerformance + '</td></tr>';
+   innerHtml += '</table>';
 
+   console.log(innerHtml);
 
     workoutDiv.innerHTML = innerHtml;
 

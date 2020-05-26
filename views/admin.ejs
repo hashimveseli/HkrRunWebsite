@@ -8,11 +8,12 @@
   </head>
 
   <% var userList = users; %>
+  <% var tableRow = 0; %>
 
   <body>
 
     <div class="header">
-      <h1 class="w3-myfont">HKR Run Admin</h1>
+      <h1>HKR Run Admin</h1>
       <p>Be in charge of the website.</p>
     </div>
 
@@ -25,9 +26,9 @@
       <li style="float:right"><a href="logout">Logout</a></li>
     </ul>
 
-    <div>
-        <table class="userTable" id="userTable">
-            <tr>
+    <div class="tableWrapper">
+        <table class="defaultTable" id="userTable">
+            <tr class="defaultColumn">
                 <td>ID</td>
                 <td>SSN</td>
                 <td>Username</td>
@@ -36,13 +37,18 @@
             </tr>     
             <% if(userList != undefined) { %>   
             <% for(var i = 0; i < userList.length; i++){ %>
-              <tr>
+              <tr class="defaultRow<%= tableRow %>">
                 <td><%= userList[i].userId %></td>
                 <td><%= userList[i].ssn %></td>
                 <td><%= userList[i].username %></td>
                 <td><%= userList[i].email %></td>
                 <td><%= userList[i].privilege %></td>
               </tr>
+              <% if(tableRow == 0){
+                tableRow = 1;
+              }else{
+                tableRow = 0;
+              } %>
             <% } }%>
         </table>
     </div>

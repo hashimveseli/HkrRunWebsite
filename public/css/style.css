@@ -120,6 +120,53 @@ text-decoration: none;
   margin-bottom: 10px;
 }
 
-.w3-myfont {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+/*
+* Table CSS
+*/
+
+.wrapper {
+  display: flex;
+  margin-top: 20px;
+}
+
+.tableWrapper {
+  overflow:hidden;
+  overflow-y: scroll;
+  height: 200px; 
+}
+
+.defaultTable {
+  margin-left:auto; 
+  margin-right:auto;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 100px;
+  box-shadow: 5px 10px black;
+  margin-bottom: 20px;
+}
+
+.defaultColumn {
+  background-color: rgb(132, 190, 108);
+}
+
+.defaultRow0 {
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+
+.defaultRow1 {
+  text-align: center;
+  background-color: lightgray;
+  color: black;
+}
+
+.defaultRow0:hover {
+  background-color: rgb(132, 190, 108);
+  color: white;
+}
+
+.defaultRow1:hover {
+  background-color: rgb(132, 190, 108);
+  color: white;
 }

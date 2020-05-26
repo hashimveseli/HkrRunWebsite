@@ -44,8 +44,8 @@ function displayDistanceGraph(workouts){
         labels: labels,
         datasets: [{
             label: 'Distance',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(132, 190, 108)',
+            borderColor: 'rgb(132, 190, 108)',
             data: data
         }]
     },
@@ -84,8 +84,8 @@ function displayStepsGraph(workouts){
         labels: labels,
         datasets: [{
             label: 'Steps',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(132, 190, 108)',
+            borderColor: 'rgb(132, 190, 108)',
             data: data
         }]
     },
@@ -124,8 +124,8 @@ function displayTimeGraph(workouts){
         labels: labels,
         datasets: [{
             label: 'Time',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(132, 190, 108)',
+            borderColor: 'rgb(132, 190, 108)',
             data: data
         }]
     },
