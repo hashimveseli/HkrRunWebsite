@@ -23,7 +23,7 @@
           <li style="float:right"><a href="logout">Logout</a></li>
         </ul>
 
-        <div class="login-form">
+        <div class="default-form">
             <h1>Change Password Form</h1>
             <form action="/password" method="POST">
               <input type="password" name="oldPassword" placeholder="Old password" required>
@@ -33,7 +33,7 @@
           <%= passwordChangeStatus %>
         </div>
 
-        <div class="login-form">
+        <div class="default-form">
             <h1>Change Email Form</h1>
             <form action="/email" method="POST">
               <input type="text" name="oldEmail" placeholder="Old email" required>
