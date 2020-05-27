@@ -1,3 +1,8 @@
+/**
+ * This file contains the functionality needed to visualize the data in graphs.
+ * Using the chart.js package.
+ * 
+ */
 console.log('Creating empty chart..');
 var ctx = document.getElementById('workoutChart').getContext('2d');
 var chart = new Chart(ctx, {

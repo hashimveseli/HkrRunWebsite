@@ -156,7 +156,7 @@ router.post('/register', [check('email').isEmail()], [check('ssn').isNumeric()],
     }
 });
 
-//Change password
+//User change password
 router.post('/password', (req, res) => {
     restApi.changePassword(req.body, req.session).then(response => {
         if(response.status == '200'){
@@ -175,7 +175,7 @@ router.post('/password', (req, res) => {
     });
 })
 
-//Change email
+//User change email
 router.post('/email', [check('email').isEmail()], (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -238,7 +238,7 @@ router.post('/admin/password', (req, res) => {
     });
 })
 
-//Change admin email
+//Change user email
 router.post('/admin/email',[check('email').isEmail()], (req, res) => {
     const data = {};
 
@@ -335,7 +335,7 @@ router.post('/admin/delete',[check('userId').isNumeric()], (req, res) => {
 
 });
 
-//Change privilege
+//Change a users privilege
 router.post('/admin/privilege', [check('privilege').isNumeric()], (req, res) => {
     const data = {};
 

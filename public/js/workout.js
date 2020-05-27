@@ -1,5 +1,5 @@
 /**
- * 
+ * This file contains a function used to visualize all the data of a specific workout.
  * 
  */
 

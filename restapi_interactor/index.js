@@ -1,9 +1,10 @@
 const axios = require('axios');
 
 /**
- * Information
+ * This file contains all the different rest api calls the application makes.
  */
 
+//Call to the REST API in order to log in a user.
 function login(data) {
     console.log('Trying to log in..');
     
@@ -25,6 +26,7 @@ function login(data) {
     );
 }
 
+//Call to the REST API in order to register a new user.
 function register(data){
     console.log('Registering new user..');
 
@@ -48,6 +50,7 @@ function register(data){
     );
 }
 
+//Call to the REST API used to fetch all the workouts a user has performed.
 function fetchWorkouts(session){
     console.log('fetching all workouts..');
     console.log('Adding token: ', session.token);
@@ -68,6 +71,7 @@ function fetchWorkouts(session){
     );
 }
 
+//Call to the REST API to fetch all the users of the application, this is an admin functionality.
 function fetchUsers(session){
     console.log('fetching all users');
     console.log('Adding token: ', session.token);
@@ -87,11 +91,7 @@ function fetchUsers(session){
     })
 }
 
-/**
- * Configuration REST API calls
- * 
- */
-
+//Call to the REST API to to change the password, used by the users.
 function changePassword(data, session){
     console.log('Changing password..');
     console.log('Adding token: ', session.token);
@@ -115,6 +115,7 @@ function changePassword(data, session){
     );
 }
 
+//Call to the REST API to change the email, this used by the users.
 function changeEmail(data, session){
     console.log('Changing email..');
     console.log('Adding token: ', session.token);
@@ -138,12 +139,7 @@ function changeEmail(data, session){
     );
 }
 
-/**
- * Admin methods
- * 
- * 
- */
-
+ //Call to the REST API that allows the admin to change a users password, this is an admin functionality.
 function adminChangePassword(data, session){
     console.log('Admin changing a user password..');
 
@@ -167,6 +163,7 @@ function adminChangePassword(data, session){
     );
 }
 
+ //Call to the REST API that allows the admin to change a users email, this is an admin functionality.
 function adminChangeEmail(data, session){
     console.log('Admin changing a user email..');
 
@@ -189,6 +186,7 @@ function adminChangeEmail(data, session){
     );
 }
 
+ //Call to the REST API that allows the admin to change a users privilege, this is an admin functionality.
 function adminChangePrivilege(data, session){
     console.log('Admin changing a user privilege..');
 
@@ -211,6 +209,7 @@ function adminChangePrivilege(data, session){
     );
 }
 
+ //Call to the REST API that allows the admin to delete a user, this is an admin functionality.
 function adminDeleteUser(request, session){
     console.log('Admin deleting a user..', request.userId);
 
@@ -230,22 +229,6 @@ function adminDeleteUser(request, session){
     }
     );
 }
-
-//Perhaps not needed!
-/*function fetchWorkout(id){
-    console.log('Fetching workout with id: ' + id);
-
-    return axios.get('https://hkrrun-api-jswgvsei4q-lz.a.run.app/workout/' + id)
-    .then((response) => {
-        console.log('response received..')
-        console.log(response.data);
-
-        return response;
-    }, (error) => {
-        console.log('Error!');
-        console.log(error);
-    });
-}*/
 
 //Export functions so they can be used by all routes..
 module.exports = {
