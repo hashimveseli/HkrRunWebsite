@@ -1,6 +1,6 @@
 Environment variables for Cloud run:
 
-SESSION_SECRET: 
+SESSION_SECRET: 18ba9431-8380-4b09-90e7-590e66445d79
 
 
 Google Cloud Interaction
