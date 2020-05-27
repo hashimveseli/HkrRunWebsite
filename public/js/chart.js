@@ -23,6 +23,7 @@ var chart = new Chart(ctx, {
 
 function displayDistanceGraph(workouts){
     console.log('Creating distance graph data..');
+    chart.destroy();
 
     var labels = [];
     var data = [];
@@ -40,7 +41,7 @@ function displayDistanceGraph(workouts){
 
     console.log('Creating distance graph..');
     var ctx = document.getElementById('workoutChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
@@ -63,6 +64,7 @@ function displayDistanceGraph(workouts){
 
 function displayStepsGraph(workouts){
     console.log('Creating steps graph data..');
+    chart.destroy();
 
     var labels = [];
     var data = [];
@@ -80,7 +82,7 @@ function displayStepsGraph(workouts){
 
     console.log('Creating steps graph..');
     var ctx = document.getElementById('workoutChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
@@ -102,6 +104,7 @@ function displayStepsGraph(workouts){
 
 function displayTimeGraph(workouts){
     console.log('Creating time graph data..');
+    chart.destroy();
 
     var labels = [];
     var data = [];
@@ -120,7 +123,7 @@ function displayTimeGraph(workouts){
 
     console.log('Creating time graph..');
     var ctx = document.getElementById('workoutChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
