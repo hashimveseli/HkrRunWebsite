@@ -24,11 +24,13 @@
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <input type="text" name="email" placeholder="Email" required>
-                <input type="text" name="ssn" placeholder="SSN" required>
+                <input type="text" name="ssn" placeholder="SSN (10 digits)" required>
                 <button class="adminSubmitButtons">Submit</button>
             </form>
         </div>
-        <%= registerStatus %>
+        <% if(registerStatus != ''){ %>
+            <script>alert("<%= registerStatus %>")</script>
+        <% } %>
         
     </article>
 

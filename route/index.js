@@ -7,6 +7,7 @@ const auth = require('../auth/authentication.js');
 const workoutScripts = require('../public/js/workout.js');
 const restApi = require('../restapi_interactor/index.js');
 const express = require("express");
+const {check, validationResult} = require('express-validator');
 const router  = express.Router();
 
 //Adds route for the login page.
@@ -76,23 +77,33 @@ router.get('/admin', auth.authUser, auth.authRole, (req, res) => {
             console.log(response.data);
 
             let data = {};
-            data.users = response.data.users;
-            data.message = 'Success';
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = '';
+            if(req.session.adminMessages != undefined){
+                data = req.session.adminMessages;
+                data.users = response.data.users;
+            }else{
+                data.users = response.data.users;
+                data.message = 'Success';
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = '';
+            }
 
             res.render('admin', data);
         }else{
 
             let data = {};
-            data.users = null;
-            data.message = 'Failure fetching all users';
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = '';
+            if(req.session.adminMessages != undefined){
+                data = req.session.adminMessages;
+                data.users = response.data.users;
+            }else{
+                data.users = response.data.users;
+                data.message = 'Failure fetching users';
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = '';
+            }
 
             res.render('admin', data);
         }
@@ -119,20 +130,31 @@ router.post('/', (req, res) => {
 });
 
 //Register
-router.post('/register', (req, res) => {
-    restApi.register(req.body).then(response => {
-        if(response.status == '200'){
-            let data = {};
-            data.registerStatus = '';
+router.post('/register', [check('email').isEmail()], [check('ssn').isNumeric()], (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        console.log(errors);
+        let data = {};
+        data.registerStatus = 'Failed registering, invalid input.';
 
-            res.render('login');
-        }else{
-            let data = {};
-            data.registerStatus = 'Failed registering new user..'
-            res.render('register', data);
-        }
-    })
-})
+        res.render('register', data);
+
+    }else{
+
+        restApi.register(req.body).then(response => {
+            if(response.status == '200'){
+                let data = {};
+                data.registerStatus = '';
+
+                res.render('login');
+            }else{
+                let data = {};
+                data.registerStatus = 'Failed registering new user..'
+                res.render('register', data);
+            }
+        });
+    }
+});
 
 //Change password
 router.post('/password', (req, res) => {
@@ -154,22 +176,33 @@ router.post('/password', (req, res) => {
 })
 
 //Change email
-router.post('/email', (req, res) => {
-    restApi.changeEmail(req.body, req.session).then(response => {
-        if(response.status == '200'){
-            let data = {};
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = 'Email change failed..';
+router.post('/email', [check('email').isEmail()], (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        let data = {};
+        data.passwordChangeStatus = '';
+        data.emailChangeStatus = 'Email change failed..';
 
-            res.render('configuration', data);
+        res.render('configuration', data);
 
-        }else{
-            let data = {};
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = 'Email change failed..';
-            res.render('configuration', data);
-        }
-    });
+    }else{
+        restApi.changeEmail(req.body, req.session).then(response => {
+            if(response.status == '200'){
+                let data = {};
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = 'Email change failed..';
+
+                res.render('configuration', data);
+
+            }else{
+                let data = {};
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = 'Email change failed..';
+                res.render('configuration', data);
+            }
+        });
+    }
 
 });
 
@@ -187,6 +220,8 @@ router.post('/admin/password', (req, res) => {
             data.deleteUserStatus = '';
             data.privilegeChangeStatus = '';
 
+            req.session.adminMessages = data;
+
             res.redirect('/admin');
 
         }else{
@@ -196,96 +231,167 @@ router.post('/admin/password', (req, res) => {
             data.deleteUserStatus = '';
             data.privilegeChangeStatus = '';
 
+            req.session.adminMessages = data;
+
             res.redirect('/admin');
         }
     });
 })
 
 //Change admin email
-router.post('/admin/email', (req, res) => {
+router.post('/admin/email',[check('email').isEmail()], (req, res) => {
     const data = {};
 
-    restApi.adminChangeEmail(req.body, req.session).then(response => {
-        if(response.status == '200'){
-            console.log('Admin email change success..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = 'Email changed..';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = '';
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        data.passwordChangeStatus = '';
+        data.emailChangeStatus = 'Email change failed..';
+        data.deleteUserStatus = '';
+        data.privilegeChangeStatus = '';
 
-            res.redirect('/admin');
+        req.session.adminMessages = data;
 
-        }else{
-            console.log('Admin email change failed..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = 'Email change failed..';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = '';
+        res.redirect('/admin');
 
-            res.redirect('/admin');
-        }
-    
-    });
+    }else{
+
+        restApi.adminChangeEmail(req.body, req.session).then(response => {
+            if(response.status == '200'){
+                console.log('Admin email change success..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = 'Email changed..';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = '';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+
+            }else{
+                console.log('Admin email change failed..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = 'Email change failed..';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = '';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+            }
+        
+        });
+    }
 
 });
 
 //Delete user
-router.post('/admin/delete', (req, res) => {
+router.post('/admin/delete',[check('userId').isNumeric()], (req, res) => {
     const data = {};
 
     console.log(req.body);
     console.log('Attempting to delete user');
 
-    restApi.adminDeleteUser(req.body, req.session).then(response => {
-        if(response.status == '200'){
-            console.log('Admin delete user success..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = 'Delete user successful..';
-            data.privilegeChangeStatus = '';
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        data.passwordChangeStatus = '';
+        data.emailChangeStatus = '';
+        data.deleteUserStatus = 'Delete user failed';
+        data.privilegeChangeStatus = '';
 
-            res.redirect('/admin');
+        req.session.adminMessages = data;
 
-        }else{
-            console.log('Admin delete user failed..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = 'Delete user failed';
-            data.privilegeChangeStatus = '';
+        res.redirect('/admin');
 
-            res.redirect('/admin');
-        }
-    
-    });
+    }else{
+
+        restApi.adminDeleteUser(req.body, req.session).then(response => {
+            if(response.status == '200'){
+                console.log('Admin delete user success..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = 'Delete user successful..';
+                data.privilegeChangeStatus = '';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+
+            }else{
+                console.log('Admin delete user failed..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = 'Delete user failed';
+                data.privilegeChangeStatus = '';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+            }
+        
+        });
+    }
 
 });
 
 //Change privilege
-router.post('/admin/privilege', (req, res) => {
+router.post('/admin/privilege', [check('privilege').isNumeric()], (req, res) => {
     const data = {};
 
-    restApi.adminChangePrivilege(req.body, req.session).then(response => {
-        if(response.status == '200'){
-            console.log('Admin privilege change success..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = 'Privilege changed..';
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        data.passwordChangeStatus = '';
+        data.emailChangeStatus = '';
+        data.deleteUserStatus = '';
+        data.privilegeChangeStatus = 'Privilege change failed..';
 
-            res.redirect('/admin');
+        req.session.adminMessages = data;
 
-        }else{
-            console.log('Admin privilege change failed..');
-            data.passwordChangeStatus = '';
-            data.emailChangeStatus = '';
-            data.deleteUserStatus = '';
-            data.privilegeChangeStatus = 'Privilege change failed..';
+        res.redirect('/admin');
 
-            res.redirect('/admin');
-        }
-        
+    }
 
-    });
+    if(req.body.privilege == 1 || req.body.privilege == 0){
+
+        restApi.adminChangePrivilege(req.body, req.session).then(response => {
+            if(response.status == '200'){
+                console.log('Admin privilege change success..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = 'Privilege changed..';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+
+            }else{
+                console.log('Admin privilege change failed..');
+                data.passwordChangeStatus = '';
+                data.emailChangeStatus = '';
+                data.deleteUserStatus = '';
+                data.privilegeChangeStatus = 'Privilege change failed..';
+
+                req.session.adminMessages = data;
+
+                res.redirect('/admin');
+            }
+            
+
+        });
+    }else{
+        console.log('Privilege not 0 or 1..');
+        data.passwordChangeStatus = '';
+        data.emailChangeStatus = '';
+        data.deleteUserStatus = '';
+        data.privilegeChangeStatus = 'Privilege change failed..';
+
+        req.session.adminMessages = data;
+
+        res.redirect('/admin');
+    }
 
 });
 

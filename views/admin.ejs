@@ -61,7 +61,9 @@
           <input type="text" name="newPassword" placeholder="New password" required>
           <button class="adminSubmitButtons">Submit</button>
         </form>  
-        <%= passwordChangeStatus %>
+        <% if(passwordChangeStatus != ''){ %>
+          <script>alert("<%= passwordChangeStatus %>")</script>
+      <% } %>
       </div>
 
       <div class="default-form">
@@ -71,7 +73,9 @@
           <input type="text" name="newEmail" placeholder="New email" required>
           <button class="adminSubmitButtons">Submit</button>
         </form>  
-        <%= emailChangeStatus %>
+        <% if(emailChangeStatus != ''){ %>
+          <script>alert("<%= emailChangeStatus %>")</script>
+      <% } %>
       </div>
 
       <div class="default-form">
@@ -81,7 +85,9 @@
           <input type="number" name="privilege" placeholder="New privilege (1 or 0)" required>
           <button class="adminSubmitButtons">Submit</button>
         </form>  
-        <%= privilegeChangeStatus %>
+        <% if(privilegeChangeStatus != ''){ %>
+          <script>alert("<%= privilegeChangeStatus %>")</script>
+      <% } %>
       </div>
 
       <div class="default-form">
@@ -90,7 +96,9 @@
           <input type="number" name="userId" placeholder="Enter userId to alter" required>
           <button class="adminSubmitButtons">Submit</button>
         </form>  
-        <%= deleteUserStatus %>
+        <% if(deleteUserStatus != ''){ %>
+          <script>alert("<%= deleteUserStatus %>")</script>
+      <% } %>
       </div>
     </div>
 
