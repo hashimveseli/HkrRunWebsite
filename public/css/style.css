@@ -170,3 +170,45 @@ text-decoration: none;
   background-color: rgb(132, 190, 108);
   color: white;
 }
+
+/*
+* Images
+*/
+
+.imagesWrapper {
+  display: flex;
+}
+
+.circleFader {
+  border-radius: 50%;
+  transition: .5s ease;
+  opacity: 0;
+}
+
+.profileWrapper {
+  text-align: center;
+}
+
+.profileWrapper:hover .imgProfile {
+  box-shadow: 5px 5px 5px grey;
+  transition: .5s ease;
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.profileWrapper:hover .circleFader {
+  opacity: 1;
+}
+
+.imgProfile {
+  opacity: 0.7;
+  margin: 10px;
+  border-radius: 50%;
+}
+
+.profileText {
+  color: white;
+  font-size: 16px;
+  text-shadow: 1px 1px grey;
+}
+
