@@ -112,10 +112,48 @@ function displayTimeGraph(workouts){
     labels.push('start');
     data.push(0);
 
-    for(var i = 0; i < workouts.length; i++){
-        labels.push(workouts[i].workoutId);
+    for(var j = 0; j < workouts.length; j++){
+        labels.push(workouts[j].workoutId);
+        console.log('workoutId: ' + workouts[j].workoutId);
+
+        //Split the time string 
+        var time = workouts[j].time.split(':');
+        console.log(time[0]);
+
+        //If time is saved with hour placeholder as well.
+        if(time.length == 3){
+
+            if(time[0] == 0){
+                var minutes = time[1];
+                var seconds = time[2];
+
+                var totalTime = minutes + '.' + seconds;
+                totalTime = parseFloat(totalTime);
+                data.push(totalTime);
+            }else{
+                //Convert hours to integer
+                var hours = parseInt(time[0]);
+                let hoursToMinutes = 0;
+
+                for(var i = 0; i < hours; i++){
+                    hoursToMinutes += 60;
+                }
+
+                var minutes = time[1];
+                var seconds = time[2];
+
+                var totalMinutes = hoursToMinutes + parseInt(minutes);
+                var totalTime = totalMinutes + '.' + seconds;
+
+                totalTime = parseFloat(totalTime);
+                data.push(totalTime);
+            }
+            
+        }
+        else{
+            data.push(parseFloat(workouts[j].time.replace(':', '.')));
+        }
         
-        data.push(parseFloat(workouts[i].time.replace(':', '.')));
     }
 
     console.log(labels);
